@@ -7,19 +7,17 @@ import http
 import json
 
 def get_soup(url,header):
-    return BeautifulSoup(urllib.urlopen(urllib.Request(url,headers=header)),'html.parser')
+    return BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url,headers=header)),'html.parser')
 
 
-query = input("query image")# you can change the query for the image  here
+query = "people wink"
 image_type="ActiOn"
 query= query.split()
 query='+'.join(query)
 url="https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
 print(url)
-#add the directory for your image here
 DIR="Pictures"
-header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"
-}
+header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"}
 soup = get_soup(url,header)
 
 
@@ -36,19 +34,17 @@ DIR = os.path.join(DIR, query.split()[0])
 
 if not os.path.exists(DIR):
             os.mkdir(DIR)
-###print images
+
 for i , (img , Type) in enumerate( ActualImages):
     try:
-        req = urllib.Request(img, headers={'User-Agent' : header})
-        raw_img = urllib.urlopen(req).read()
-
+        req = urllib.request.Request(img)
+        raw_img = requests.get(img).content
         cntr = len([i for i in os.listdir(DIR) if image_type in i]) + 1
         print(cntr)
         if len(Type)==0:
             f = open(os.path.join(DIR , image_type + "_"+ str(cntr)+".jpg"), 'wb')
         else :
             f = open(os.path.join(DIR , image_type + "_"+ str(cntr)+"."+Type), 'wb')
-
 
         f.write(raw_img)
         f.close()
