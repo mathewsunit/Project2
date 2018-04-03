@@ -10,7 +10,7 @@ def get_soup(url,header):
     return BeautifulSoup(urllib.request.urlopen(urllib.request.Request(url,headers=header)),'html.parser')
 
 
-query = "people wink"
+query = "person shush"
 image_type="ActiOn"
 query= query.split()
 query='+'.join(query)
